@@ -6,8 +6,18 @@ class Authen extends StatefulWidget {
 }
 
 class _AuthenState extends State<Authen> {
+
+  Widget showAppName(){
+    return Text('Master Flutter');
+  }
+
   @override
   Widget build(BuildContext context) {
-    return Text('StatefulWidget');
+    return Scaffold(
+        body: Container(
+      padding: EdgeInsets.only(top: 100.0),
+      alignment: Alignment(-1, 1),
+      child: showAppName(), //call showAppName
+    ));
   }
 }
