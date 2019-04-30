@@ -8,9 +8,11 @@ class Register extends StatefulWidget {
 class _RegisterState extends State<Register> {
   // Explicit
   final formKey = GlobalKey<FormState>();
+  String nameString, emailString, passWordString;
 
   Widget passwordTextFormField() {
     return TextFormField(
+      obscureText: true,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -18,14 +20,21 @@ class _RegisterState extends State<Register> {
           labelText: 'Password',
           hintText: 'More 6 Charactor',
           icon: Icon(Icons.lock)),
-          validator: (String value) {if (value.length <= 5) {
-              return 'Please Type Password more 6 Charactor';            
-          };}
+      validator: (String value) {
+        if (value.length <= 5) {
+          return 'Please Type Password more 6 Charactor';
+        }
+        ;
+      },
+      onSaved: (String value) {
+        passWordString = value;
+      },
     );
   }
 
   Widget emailTextFormField() {
     return TextFormField(
+      obscureText: true,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -41,11 +50,15 @@ class _RegisterState extends State<Register> {
 
         }
       },
+      onSaved: (String value) {
+        emailString = value;
+      },
     );
   }
 
   Widget nameTextFormField() {
     return TextFormField(
+      obscureText: true,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -61,6 +74,9 @@ class _RegisterState extends State<Register> {
           return 'Please Fill Name in the Blank';
         }
       },
+      onSaved: (String value) {
+        nameString = value;
+      },
     );
   }
 
@@ -70,7 +86,10 @@ class _RegisterState extends State<Register> {
       tooltip: 'Upload To Firebase',
       onPressed: () {
         print('You Click Upload');
-        if (formKey.currentState.validate()) {}
+        if (formKey.currentState.validate()) {
+          formKey.currentState.save();
+          print('name =$nameString,email =$emailString,password =$passWordString');
+        }
       },
     );
   }
