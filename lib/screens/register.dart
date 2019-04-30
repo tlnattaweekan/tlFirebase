@@ -13,7 +13,8 @@ class _RegisterState extends State<Register> {
               borderRadius: BorderRadius.circular(15.0),
               borderSide: BorderSide(width: 1.0, color: Colors.grey)),
           labelText: 'Password',
-          hintText: 'More 6 Charactor', icon: Icon(Icons.lock)),
+          hintText: 'More 6 Charactor',
+          icon: Icon(Icons.lock)),
     );
   }
 
@@ -51,6 +52,11 @@ class _RegisterState extends State<Register> {
         title: Text('Register'),
       ),
       body: Container(
+        decoration: BoxDecoration(
+            gradient: RadialGradient(
+                colors: [Colors.white, Colors.blue],
+                radius: 1.5,
+                center: Alignment(-1, -1))),
         padding: EdgeInsets.all(50.0),
         child: Column(
           children: <Widget>[
