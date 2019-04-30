@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tlfirebase/screens/register.dart';
+import '../screens/register.dart';
 
 class Authen extends StatefulWidget {
   @override
@@ -6,18 +8,24 @@ class Authen extends StatefulWidget {
 }
 
 class _AuthenState extends State<Authen> {
-  Widget signUpButton() {
-    return RaisedButton(
+  Widget signUpButton(BuildContext context) {
+    return RaisedButton.icon(
+      icon: Icon(Icons.pets),
+      label: Text('Sign Up'),
       color: Colors.blueGrey[300],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
-      child: Text('Sign Up'),
-      onPressed: () {},
+      onPressed: () {
+        print('Your Click Sign Up');
+        var registerRouter =
+            MaterialPageRoute(builder: (BuildContext context) => Register());
+            Navigator.of(context).push(registerRouter);
+      },
     );
   }
 
   Widget signInButton() {
     return RaisedButton(
-      color: Colors.blueGrey[300],
+      color: Colors.blueGrey[200],
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(15.0)),
       child: Text('Sign In'),
       onPressed: () {},
@@ -87,10 +95,16 @@ class _AuthenState extends State<Authen> {
                   //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: <Widget>[
                     Expanded(
-                      child: signInButton(),
+                      child: Container(
+                        child: signInButton(),
+                        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                      ),
                     ),
                     Expanded(
-                      child: signUpButton(),
+                      child: Container(
+                        child: signUpButton(context),
+                        margin: EdgeInsets.only(left: 10.0, right: 10.0),
+                      ),
                     )
                   ],
                 ),
