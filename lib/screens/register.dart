@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 class Register extends StatefulWidget {
   @override
@@ -9,6 +10,12 @@ class _RegisterState extends State<Register> {
   // Explicit
   final formKey = GlobalKey<FormState>();
   String nameString, emailString, passWordString;
+
+  //for Firebase
+  final FirebaseAuth firebaseAuth = FirebaseAuth.instance;
+
+  //For SnackBar
+  final snackBarKey = GlobalKey<ScaffoldState>();
 
   Widget passwordTextFormField() {
     return TextFormField(
@@ -34,7 +41,7 @@ class _RegisterState extends State<Register> {
 
   Widget emailTextFormField() {
     return TextFormField(
-      obscureText: true,
+      // obscureText: true,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -48,7 +55,6 @@ class _RegisterState extends State<Register> {
         } else if (!((value.contains('@')) && (value.contains('.')))) {
           //ถ้าคำนั้นมี @ อยู่จะเป็น true
           return 'กรุณากรอกอีเมล์ให้สมบูรณ์';
-
         }
       },
       onSaved: (String value) {
@@ -57,11 +63,9 @@ class _RegisterState extends State<Register> {
     );
   }
 
-  
-
   Widget nameTextFormField() {
     return TextFormField(
-      obscureText: true,
+      // obscureText: true,
       decoration: InputDecoration(
           enabledBorder: OutlineInputBorder(
               borderRadius: BorderRadius.circular(15.0),
@@ -91,15 +95,44 @@ class _RegisterState extends State<Register> {
         print('You Click Upload');
         if (formKey.currentState.validate()) {
           formKey.currentState.save();
-          print('name =$nameString,email =$emailString,password =$passWordString');
+          print(
+              'name =$nameString,email =$emailString,password =$passWordString');
+          uploadValueToFirebase();
         }
       },
     );
   }
 
+  void uploadValueToFirebase() async {
+    FirebaseUser firebaseUser = await firebaseAuth
+        .createUserWithEmailAndPassword(
+            email: emailString, password: passWordString)
+        .then((user) {
+      print('Register Success With ==>>> $user');
+    }).catchError((error) {
+      String errorString = error.message;
+      print('HAVE ERROR With ==>>> $errorString');
+      showSnackBar(errorString);
+    });
+  }
+
+  void showSnackBar(String messageString) {
+    SnackBar snackBarr = SnackBar(
+      duration: Duration(seconds: 10),
+      backgroundColor: Colors.red,
+      content: Text(messageString),
+      action: SnackBarAction(
+        label: 'Close',
+        onPressed: () {},
+      ),
+    );
+    snackBarKey.currentState.showSnackBar(snackBarr);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+        key: snackBarKey, //snackBarKey ดูแล Scaffoldนี้
         resizeToAvoidBottomPadding: false,
         appBar: AppBar(
           backgroundColor: Colors.blue[900],
