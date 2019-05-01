@@ -47,6 +47,7 @@ class _RegisterState extends State<Register> {
           return 'กรุณากรอกอีเมล์';
         } else if (!((value.contains('@')) && (value.contains('.')))) {
           //ถ้าคำนั้นมี @ อยู่จะเป็น true
+          return 'กรุณากรอกอีเมล์ให้สมบูรณ์';
 
         }
       },
@@ -55,6 +56,8 @@ class _RegisterState extends State<Register> {
       },
     );
   }
+
+  
 
   Widget nameTextFormField() {
     return TextFormField(
